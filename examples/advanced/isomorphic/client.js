@@ -2,6 +2,7 @@ import {run} from '@cycle/run';
 import xs from 'xstream';
 import {makeDOMDriver} from '@cycle/dom';
 import app from './app';
+import getModules from './modules';
 
 function clientSideApp(sources) {
   const sinks = app(sources);
@@ -16,7 +17,9 @@ function preventDefaultDriver(ev$) {
 }
 
 run(clientSideApp, {
-  DOM: makeDOMDriver('.app-container'),
+  DOM: makeDOMDriver('.app-container', {
+    modules: getModules()
+  }),
   context: () => xs.of(window.appContext),
   PreventDefault: preventDefaultDriver,
 });

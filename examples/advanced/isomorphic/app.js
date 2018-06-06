@@ -11,10 +11,14 @@ function renderMenu() {
 }
 
 function renderHomePage() {
+  const style = {
+    color: 'red'
+  };
+
   return (
     section('.home', [
       h1('The homepage'),
-      p('Welcome to our spectacular web page with nothing special here.'),
+      div({css: style}, 'This should be red.'),
       renderMenu(),
     ])
   );

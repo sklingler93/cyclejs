@@ -5,12 +5,16 @@ import browserify from 'browserify';
 import serialize from 'serialize-javascript';
 import {html, head, title, body, div, script, makeHTMLDriver} from '@cycle/dom';
 import app from './app';
+import { h } from 'snabbdom';
+import getModules from './modules';
+import { collectStyles } from 'snabbdom-typestyle';
 
 function wrapVTreeWithHTMLBoilerplate([vtree, context, clientBundle]) {
   return (
     html([
       head([
-        title('Cycle Isomorphism Example')
+        title('Cycle Isomorphism Example'),
+        h('style', collectStyles(vtree))
       ]),
       body([
         div('.app-container', [vtree]),
@@ -70,7 +74,9 @@ server.use(function (req, res) {
   const wrappedAppFn = wrapAppResultWithBoilerplate(app, context$, clientBundle$);
 
   run(wrappedAppFn, {
-    DOM: makeHTMLDriver(html => res.send(prependHTML5Doctype(html))),
+    DOM: makeHTMLDriver(html => res.send(prependHTML5Doctype(html)), {
+      modules: getModules(true)
+    }),
     context: () => context$,
     PreventDefault: () => {},
   });
