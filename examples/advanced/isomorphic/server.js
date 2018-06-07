@@ -14,7 +14,7 @@ function wrapVTreeWithHTMLBoilerplate([vtree, context, clientBundle]) {
     html([
       head([
         title('Cycle Isomorphism Example'),
-        h('style', collectStyles(vtree))
+        h('style#styles', collectStyles(vtree))
       ]),
       body([
         div('.app-container', [vtree]),
