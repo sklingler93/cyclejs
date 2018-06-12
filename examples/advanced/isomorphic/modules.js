@@ -1,5 +1,6 @@
 import PropsModule from 'snabbdom/modules/props';
 import AttrsModule from 'snabbdom/modules/attributes';
+import ClassModule from 'snabbdom/modules/class';
 
 import modulesForHTML from 'snabbdom-to-html/modules';
 import { makeClientSideCssModule, serverSideCssModule } from 'snabbdom-typestyle';
@@ -10,16 +11,17 @@ const getModules = (server = false) => {
     return [
       modulesForHTML.attributes,
       modulesForHTML.props,
-      modulesForHTML.class,
       modulesForHTML.style,
-      serverSideCssModule
+      serverSideCssModule,
+      modulesForHTML.class,
     ];
   } else {
 
     return [
       PropsModule,
       AttrsModule,
-      makeClientSideCssModule('#styles')
+      makeClientSideCssModule('#styles'),
+      ClassModule
     ];
   }
 }
